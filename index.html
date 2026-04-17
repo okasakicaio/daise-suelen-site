@@ -16,7 +16,7 @@
     </div>
 
     <div id="corinthians-content">
-        <video loop playsinline muted id="bg-video" preload="auto"> 
+        <video loop playsinline muted id="bg-video"> 
             <source id="video-source" src="RUDE.mp4" type="video/mp4">
         </video>
 
@@ -58,76 +58,12 @@
 
         let currentIndex = 0;
 
-        async function showSite() {
-    var video = document.getElementById("bg-video");
-    
-    document.getElementById("reveal-overlay").style.display = "none";
-    document.getElementById("corinthians-content").style.display = "flex";
-
-    if (video) {
-        video.load(); // Force a fresh look at the file
-        try {
-            await video.play();
-        } catch (err) {
-            console.log("Still blocked:", err);
-        }
-    }
-    // ... rest of your UI code
-}
-        }
-
-        async function updatePlayer() {
-            const video = document.getElementById("bg-video");
-            const videoSource = document.getElementById("video-source");
-            const titleTag = document.getElementById("song-title");
-            const photoTag = document.getElementById("player-photo");
-
-            // Stop current action to prevent AbortError
-            video.pause();
-
-            videoSource.src = playlist[currentIndex].video;
+        function showSite() {
+            var video = document.getElementById("bg-video");
+            if (video) video.play();
             
-            // Reload the video with the new source
-            video.load();
+            document.getElementById("reveal-overlay").style.display = "none";
+            document.getElementById("corinthians-content").style.display = "flex";
 
-            // Update Text & Music UI Image
-            titleTag.innerText = playlist[currentIndex].title;
-            photoTag.src = playlist[currentIndex].image;
-            document.getElementById("play-btn").innerText = "⏸";
-
-            // Play the new video and handle potential errors
-            try {
-                await video.play();
-            } catch (err) {
-                console.error("Video play failed:", err);
-            }
-        }
-
-        function nextMedia() { 
-            currentIndex = (currentIndex + 1) % playlist.length; 
-            updatePlayer(); 
-        }
-        
-        function prevMedia() { 
-            currentIndex = (currentIndex - 1 + playlist.length) % playlist.length; 
-            updatePlayer(); 
-        }
-        
-        function togglePlay() {
-            const video = document.getElementById("bg-video");
-            const btn = document.getElementById("play-btn");
-            if (video.paused) { 
-                video.play(); 
-                btn.innerText = "⏸"; 
-            } else { 
-                video.pause(); 
-                btn.innerText = "▶"; 
-            }
-        }
-
-        function changeVolume() {
-            document.getElementById("bg-video").volume = document.getElementById("volume-slider").value;
-        }
-    </script>
-</body>
-</html>
+            // Basic UI sync
+            document.getElementById("song-title").innerText = playlist
