@@ -59,24 +59,21 @@
         let currentIndex = 0;
 
         async function showSite() {
-            var video = document.getElementById("bg-video");
-            
-            document.getElementById("reveal-overlay").style.display = "none";
-            document.getElementById("corinthians-content").style.display = "flex";
+    var video = document.getElementById("bg-video");
+    
+    document.getElementById("reveal-overlay").style.display = "none";
+    document.getElementById("corinthians-content").style.display = "flex";
 
-            // Initial UI sync
-            const titleTag = document.getElementById("song-title");
-            const photoTag = document.getElementById("player-photo");
-            titleTag.innerText = playlist[0].title;
-            photoTag.src = playlist[0].image;
-
-            if (video) {
-                try {
-                    await video.play();
-                } catch (err) {
-                    console.log("Autoplay blocked, waiting for user interaction.");
-                }
-            }
+    if (video) {
+        video.load(); // Force a fresh look at the file
+        try {
+            await video.play();
+        } catch (err) {
+            console.log("Still blocked:", err);
+        }
+    }
+    // ... rest of your UI code
+}
         }
 
         async function updatePlayer() {
