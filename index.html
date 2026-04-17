@@ -17,8 +17,8 @@
 
     <div id="corinthians-content">
         <video loop playsinline muted id="bg-video"> 
-    <source id="video-source" src="RUDE.mp4" type="video/mp4">
-</video>
+            <source id="video-source" src="RUDE.mp4" type="video/mp4">
+        </video>
 
         <div class="text-group">
             <h1> isto é </h1>
@@ -58,36 +58,52 @@
 
         let currentIndex = 0;
 
-        function showSite() {
+        async function showSite() {
             var video = document.getElementById("bg-video");
-            if (video) video.play();
             
             document.getElementById("reveal-overlay").style.display = "none";
             document.getElementById("corinthians-content").style.display = "flex";
 
-            // Initial UI sync for the player card ONLY
+            // Initial UI sync
             const titleTag = document.getElementById("song-title");
             const photoTag = document.getElementById("player-photo");
-            
             titleTag.innerText = playlist[0].title;
             photoTag.src = playlist[0].image;
+
+            if (video) {
+                try {
+                    await video.play();
+                } catch (err) {
+                    console.log("Autoplay blocked, waiting for user interaction.");
+                }
+            }
         }
 
-        function updatePlayer() {
+        async function updatePlayer() {
             const video = document.getElementById("bg-video");
             const videoSource = document.getElementById("video-source");
             const titleTag = document.getElementById("song-title");
             const photoTag = document.getElementById("player-photo");
 
-            videoSource.src = playlist[currentIndex].video;
-            video.load();
-            video.play();
+            // Stop current action to prevent AbortError
+            video.pause();
 
-            // Swap Text & Music UI Image ONLY (Center photo stays fixed)
+            videoSource.src = playlist[currentIndex].video;
+            
+            // Reload the video with the new source
+            video.load();
+
+            // Update Text & Music UI Image
             titleTag.innerText = playlist[currentIndex].title;
             photoTag.src = playlist[currentIndex].image;
-
             document.getElementById("play-btn").innerText = "⏸";
+
+            // Play the new video and handle potential errors
+            try {
+                await video.play();
+            } catch (err) {
+                console.error("Video play failed:", err);
+            }
         }
 
         function nextMedia() { 
