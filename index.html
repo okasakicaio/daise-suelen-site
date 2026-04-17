@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>daiii</title>
+    <link rel="stylesheet" type="text/css" href="estiloscss.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ballet:opsz@16..72&family=Monsieur+La+Doulaise&display=swap');
+    </style>
+</head>
+
+<body>
+    <div id="reveal-overlay"> 
+        <button onclick="showSite()" class="btn-start">Oiii</button>
+    </div>
+
+    <div id="corinthians-content">
+        <video loop playsinline id="bg-video">
+            <source id="video-source" src="RUDE.mp4" type="video/mp4">
+        </video>
+
+        <div class="text-group">
+            <h1> isto é </h1>
+            <h2> Daise Suelen</h2>
+        </div>
+
+        <img src="chuu.gif" class="gif-chuu" alt="Chuu">
+        <img src="DAI.jpeg" id="center-photo-main" class="center-photo" alt="Middle Photo">
+        <img src="riku.gif" class="gif-riku" alt="Riku">
+
+        <div class="player-card">
+            <div class="album-art">
+                <img src="DAI.jpeg" id="player-photo" alt="Album Art">
+            </div>
+            <div class="song-info">
+                <h3 id="song-title">RUDE</h3>
+            </div>
+            <div class="controls">
+                <button onclick="prevMedia()" class="ctrl-btn">⏮</button>
+                <button onclick="togglePlay()" id="play-btn" class="ctrl-btn">⏸</button>
+                <button onclick="nextMedia()" class="ctrl-btn">⏭</button>
+            </div>
+            <div class="card-volume">
+                <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1" oninput="changeVolume()">
+            </div>
+        </div>
+    </div> 
+
+    <script>
+        const playlist = [
+            { video: "RUDE.mp4", image: "rude.jpeg", title: "Hearts2Hearts 하츠투하츠 'RUDE!'" },
+            { video: "video2.mp4", image: "popop.jpeg", title: "NCT WISH 엔시티 위시 'poppop'" },
+            { video: "video3.mp4", image: "Fever.jpeg", title: "ENHYPEN (엔하이픈) 'FEVER'" },
+            { video: "video4.mp4", image: "kiiikiii.jpg", title: "KiiiKiii 키키 '404 (New Era)'" },
+            { video: "video5.mp4", image: "Riize.jpg", title: "RIIZE 라이즈 'Love 119'" }
+        ];
+
+        let currentIndex = 0;
+
+        function showSite() {
+            var video = document.getElementById("bg-video");
+            if (video) video.play();
+            
+            document.getElementById("reveal-overlay").style.display = "none";
+            document.getElementById("corinthians-content").style.display = "flex";
+
+            // Initial UI sync for the player card ONLY
+            const titleTag = document.getElementById("song-title");
+            const photoTag = document.getElementById("player-photo");
+            
+            titleTag.innerText = playlist[0].title;
+            photoTag.src = playlist[0].image;
+        }
+
+        function updatePlayer() {
+            const video = document.getElementById("bg-video");
+            const videoSource = document.getElementById("video-source");
+            const titleTag = document.getElementById("song-title");
+            const photoTag = document.getElementById("player-photo");
+
+            videoSource.src = playlist[currentIndex].video;
+            video.load();
+            video.play();
+
+            // Swap Text & Music UI Image ONLY (Center photo stays fixed)
+            titleTag.innerText = playlist[currentIndex].title;
+            photoTag.src = playlist[currentIndex].image;
+
+            document.getElementById("play-btn").innerText = "⏸";
+        }
+
+        function nextMedia() { 
+            currentIndex = (currentIndex + 1) % playlist.length; 
+            updatePlayer(); 
+        }
+        
+        function prevMedia() { 
+            currentIndex = (currentIndex - 1 + playlist.length) % playlist.length; 
+            updatePlayer(); 
+        }
+        
+        function togglePlay() {
+            const video = document.getElementById("bg-video");
+            const btn = document.getElementById("play-btn");
+            if (video.paused) { 
+                video.play(); 
+                btn.innerText = "⏸"; 
+            } else { 
+                video.pause(); 
+                btn.innerText = "▶"; 
+            }
+        }
+
+        function changeVolume() {
+            document.getElementById("bg-video").volume = document.getElementById("volume-slider").value;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+/* RESET & LAYOUT */
+body { margin: 0; padding: 0; overflow-x: hidden; background-color: black; }
+
+#reveal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+    background-color: black; display: flex; justify-content: center; align-items: center; z-index: 999;
+}
+
+#corinthians-content {
+    display: none; flex-direction: column; align-items: center;
+    min-height: 100vh; width: 100%; position: relative; overflow: hidden;
+}
+
+#bg-video { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: -1; }
+
+/* TEXT */
+.text-group { margin-top: 5vh; z-index: 10; text-align: center; }
+h1 { font-family: Helvetica; color: white; font-size: 20px; margin: 0; }
+h2 {
+    font-family: 'Ballet', cursive; font-size: 180px; margin: 0;
+    background-image: url('gglitter.gif'); background-clip: text; -webkit-background-clip: text;
+    color: transparent; transform: translateY(-30px);
+    padding: 40px 100px;
+    margin-top: -55px;
+}
+
+/* THE CENTERED TRIO */
+.center-photo {
+    width: 320px; position: absolute; left: 50%; top: 55%;
+    transform: translate(-50%, -50%); border: 5px solid white;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5); z-index: 15;
+}
+
+.gif-chuu {
+    width: 200px; 
+    position: absolute; 
+    left: 50%; 
+    top: 55%;
+    /* Changing -380px to -430px pulls her further left */
+    transform: translate(-390px, -50%); 
+    border: 5px solid white; 
+    z-index: 10;
+}
+
+.gif-riku {
+    width: 200px; position: absolute; left: 50%; top: 55%;
+    transform: translate(180px, -50%); border: 5px solid white; z-index: 10;
+}
+
+/* PLAYER CARD */
+.player-card {
+    position: fixed; bottom: 30px; right: 30px; width: 220px;
+    background: rgba(0, 0, 0, 0.85); border: 2px solid limegreen;
+    border-radius: 15px; padding: 15px; display: flex; flex-direction: column;
+    align-items: center; z-index: 100; box-shadow: 0 0 20px rgba(50, 205, 50, 0.4);
+}
+
+.album-art img { width: 100%; height: 180px; object-fit: cover; border-radius: 10px; margin-top: 10px; }
+.song-info { text-align: center; margin-bottom: -20px; margin-top: -10px ; font-family: Helvetica; color: white; }
+#song-artist { color: limegreen; font-size: 12px; }
+.controls { display: flex; gap: 15px; }
+.ctrl-btn { background: none; border: none; color: white; font-size: 20px; cursor: pointer; margin-bottom: -16px; }
+.ctrl-btn:hover { color: limegreen; }
+#volume-slider { width: 80%; accent-color: limegreen; margin-top: 10px; }
+
+/* START BUTTON */
+.btn-start {
+    padding: 15px 35px; background: black; color: limegreen;
+    border: 2px solid limegreen; font-weight: bold; cursor: pointer;
+    box-shadow: 0 0 10px limegreen;
+}
+/* 8. VOLUME SLIDER INSIDE CARD - CENTERED FIX */
+.card-volume {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Centers the slider horizontally */
+    align-items: center;
+    margin-top: 15px;       /* Adds space between the buttons and the bar */
+}
+
+#volume-slider {
+    width: 85%;              /* How long the bar is inside the square */
+    cursor: pointer;
+    accent-color: limegreen; /* Makes the bar green */
+}
