@@ -66,4 +66,54 @@
             document.getElementById("corinthians-content").style.display = "flex";
 
             // Basic UI sync
-            document.getElementById("song-title").innerText = playlist
+            document.getElementById("song-title").innerText = playlist[0].title;
+            document.getElementById("player-photo").src = playlist[0].image;
+        }
+
+        async function updatePlayer() {
+            const video = document.getElementById("bg-video");
+            const videoSource = document.getElementById("video-source");
+
+            video.pause();
+            videoSource.src = playlist[currentIndex].video;
+            video.load();
+
+            document.getElementById("song-title").innerText = playlist[currentIndex].title;
+            document.getElementById("player-photo").src = playlist[currentIndex].image;
+            document.getElementById("play-btn").innerText = "⏸";
+
+            try {
+                await video.play();
+            } catch (err) {
+                console.error("Play error:", err);
+            }
+        }
+
+        function nextMedia() { 
+            currentIndex = (currentIndex + 1) % playlist.length; 
+            updatePlayer(); 
+        }
+        
+        function prevMedia() { 
+            currentIndex = (currentIndex - 1 + playlist.length) % playlist.length; 
+            updatePlayer(); 
+        }
+        
+        function togglePlay() {
+            const video = document.getElementById("bg-video");
+            const btn = document.getElementById("play-btn");
+            if (video.paused) { 
+                video.play(); 
+                btn.innerText = "⏸"; 
+            } else { 
+                video.pause(); 
+                btn.innerText = "▶"; 
+            }
+        }
+
+        function changeVolume() {
+            document.getElementById("bg-video").volume = document.getElementById("volume-slider").value;
+        }
+    </script>
+</body>
+</html>
